@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Founders Grotesk";
+    font-weight: 300;
+    src: url("/fonts/founders-grotesk-web-light.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Founders Grotesk";
+    font-weight: 400;
+    src: url("/fonts/founders-grotesk-web-regular.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Founders Grotesk";
+    font-weight: 500;
+    src: url("/fonts/founders-grotesk-web-medium.woff2") format("woff2");
+    font-display: swap;
+  }
+}
