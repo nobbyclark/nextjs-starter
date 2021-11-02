@@ -1,23 +1,35 @@
-import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+export async function getServerSideProps() {
+  const res = await fetch(
+    `https://api.latticehq.com/v1/goals?state=Active&expand[]=owners`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${process.env.LATTICE_TOKEN}`,
+      },
+    }
+  );
+  const json = await res.json();
 
-export default function Home() {
+  if (!json) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { json },
+  };
+}
+
+export default function Home({ json }) {
   return (
-    <div className="container">
-      <Head>
-        <title>Next.js Starter!</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <Header title="Welcome to my app!" />
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-      </main>
-
-      <Footer />
-    </div>
-  )
+    !!json?.data?.length && (
+      <ul>
+        {json.data.map((d) => (
+          <li key={d.id}>{d.name}</li>
+        ))}
+      </ul>
+    )
+  );
 }
