@@ -23,4 +23,8 @@
     src: url("/fonts/founders-grotesk-web-medium.woff2") format("woff2");
     font-display: swap;
   }
+
+  body {
+    @apply bg-black text-white;
+  }
 }
