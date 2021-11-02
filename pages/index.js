@@ -1,14 +1,9 @@
+import Link from "next/link";
+
+import { fetchGoals } from "../utils/fetch-helpers";
+
 export async function getServerSideProps() {
-  const res = await fetch(
-    `https://api.latticehq.com/v1/goals?state=Active&expand[]=owners`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${process.env.LATTICE_TOKEN}`,
-      },
-    }
-  );
+  const res = await fetchGoals();
   const json = await res.json();
 
   if (!json) {
@@ -27,7 +22,11 @@ export default function Home({ json }) {
     !!json?.data?.length && (
       <ul>
         {json.data.map((d) => (
-          <li key={d.id}>{d.name}</li>
+          <li key={d.id}>
+            <Link href={`/goals/${d.id}`}>
+              <a>{d.name}</a>
+            </Link>
+          </li>
         ))}
       </ul>
     )
